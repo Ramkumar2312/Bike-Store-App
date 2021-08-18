@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inventory Update Page </title>
+</head>
+<body>
+<form action="/details/update/" method="POST">
+<table border="1">
+    <tr>
+    <th>Bike ID</th>
+    <th>Bike Name</th>
+    <th>Bike Model</th>
+    <th>Bike Chassis No</th>
+    <th>Bike Base Price</th>
+    <th>Bike Count</th>
+    <th>Selector </th>
+    </tr>
+
+    {% for bike in bikedata %}
+    <tr>
+    <td>{{ bike.id }}</td>
+    <td>{{ bike.bike_name }}</td>
+    <td>{{ bike.bike_model }}</td>
+    <td>{{ bike.bike_chassis_number }}</td>
+    <td>{{ bike.base_price }}</td>
+    <td>{{ bike.bike_count }}</td>
+    <td><a href="/details/update/{{ bike.id }}" class="btn"> Update Entry</a></td>
+    </tr>
+    {% endfor %}
+</table>
+
+</form>
+<br>
+<a href="{{ url_for('bike_details_add')}}">Add more bike details</a>
+</body>
+</html>

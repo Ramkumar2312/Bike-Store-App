@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>details</title>
+</head>
+<body>
+<h1>Welcome to inventory manager</h1>
+<h1>Enter the bike details </h1>
+<form action="/details/add" method="POST">
+    <label for="bikename">Bike Name :</label>
+    <input type="text" id="bikename" name="bike_name"><br>
+    <label for="bikeprice">Bike Price :</label>
+    <input type="text" id="bikeprice" name="bike_price"><br>
+    <label for="bikemodel">Bike Model :</label>
+    <input type="text" id="bikemodel" name="bike_model"><br>
+    <label for="bikechassis">Bike Chassis No :</label>
+    <input type="text" id="bikechassis" name="bike_chassis_no"><br>
+    <label for="bikecount">Bike Count :</label>
+    <input type="text" id="bikecount" name="bike_count"><br>
+    <input type="submit">
+
+    <a href="{{ url_for('bike_details_display') }}">View Bike Details</a>
+</form>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Bike detail</title>
+</head>
+<body>
+<h1>Enter Details to update</h1>
+<form action="/details/update/{{ bike.id }}"  method="POST">
+    <table border="1">
+    <tr>
+    <th>Bike Name</th>
+    <td>{{ bike.bike_name }}</td>
+    <td><input type="text" name="bikename" value="{{ bike.bike_name }}"></td>
+    </tr>
+    <tr>
+    <th>Bike Model</th>
+    <td>{{ bike.bike_model }}</td>
+    <td><input type="text" name="bikemodel" value="{{ bike.bike_model }}"></td>
+    </tr>
+    <tr>
+    <th>Bike Chassis Number</th>
+    <td>{{ bike.bike_chassis_number }}</td>
+    <td><input type="text" name="bikechassisno" value="{{ bike.bike_chassis_number }}"></td>
+    </tr>
+    <tr>
+    <th>Bike Price</th>
+    <td>{{ bike.base_price }}</td>
+    <td><input type="text" name="baseprice" value="{{ bike.base_price }}"></td>
+    </tr>
+    <tr>
+    <th>Bike Count</th>
+    <td>{{ bike.bike_count }}</td>
+    <td><input type="text" name="bikecount" value="{{ bike.bike_count }}"></td>
+    </tr>
+    </table>
+    <input type="submit" name="submit">
+
+
+</form>
+
+
+
+</body>
+</html>
