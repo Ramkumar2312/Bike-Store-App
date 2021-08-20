@@ -2,8 +2,6 @@ from flask import render_template,request,url_for,jsonify,redirect,flash
 from bikestore import  app,db,bcrypt
 from bikestore.models import Bike_order,Bike_inventory
 # dictionary defined globally
-bike_details = {}
-bike_list = []
 
 @app.route("/")
 def home():
@@ -103,7 +101,11 @@ def order_delete(id):
 
     return redirect(url_for('order_display'))
 
+'''
+add home route link in all apps
 
+
+'''
 
 
 
