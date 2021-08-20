@@ -25,7 +25,8 @@
     <td>{{ bike.bike_chassis_number }}</td>
     <td>{{ bike.base_price }}</td>
     <td>{{ bike.bike_count }}</td>
-    <td><a href="/details/update/{{ bike.id }}" class="btn"> Update Entry</a></td>
+    <td><a href="/details/update/{{ bike.id }}" class="btn">Update</a></td>
+    <td><button type="submit" formaction="/details/delete/{{ bike.id }}">Delete</button></td>
     </tr>
     {% endfor %}
 </table>

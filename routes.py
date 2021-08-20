@@ -1,4 +1,4 @@
-from flask import render_template,request,url_for,jsonify,redirect
+from flask import render_template,request,url_for,jsonify,redirect,flash
 from bikestore import  app,db,bcrypt
 from bikestore.models import Bike_order,Bike_inventory
 # dictionary defined globally
@@ -8,43 +8,6 @@ bike_list = []
 @app.route("/")
 def home():
     return render_template("home.html")
-
-@app.route("/name/<name>")
-def display_name(name):
-    return f"Name from url {name}"
-
-@app.route("/test")
-def test():
-    return render_template("test.html")
-
-@app.route("/details" , methods=['GET','POST'])
-def details():
-    # global bike_details
-    # bike_details[request.form['bike_name']] = request.form['bike_price']
-    #bike_list.append(bike_details)
-    return render_template("bike_details_add.html")
-
-@app.route("/bikedetails")
-def bikedetails():
-    bikes = Bike_inventory.query.all()
-    for bike in bikes:
-      bike_details[bike.bike_name] = {"Bike_name ": bike.bike_name,
-                                      "Bike_price ": bike.base_price,
-                                      "Bike_chassis_no":bike.bike_chassis_number,
-                                      "Bike_model": bike.bike_model,
-                                      "Bike_count": bike.bike_count,
-                                     }
-
-    return jsonify(bike_details)
-
-
-@app.route("/deletebike/<name>", methods=['DELETE'])
-def delete_bike(name):
-    if name in bike_details.keys():
-        bike_details.pop(name)
-        return jsonify(f"Bike details of {name} deleted")
-    else:
-        return "Invalid bike name"
 
 
 # 1 . add bikes
@@ -78,8 +41,7 @@ def bike_details_display():
 # 3. select bike details to update
 @app.route("/details/update/<bikeid>", methods=['PUT', 'GET','POST'])
 def bike_details_update(bikeid):
-    print(id)
-    bike = Bike_inventory.query.filter_by(id = bikeid).first()
+    bike = Bike_inventory.query.filter_by(id=bikeid).first()
     if request.method == 'POST':
         bike.bike_name = request.form['bikename']
         bike.bike_model = request.form['bikemodel']
@@ -94,14 +56,56 @@ def bike_details_update(bikeid):
     return render_template('bike_details_update.html',bike=bike)
 
 
+# 4. Delete bike details
+@app.route("/details/delete/<bikeid>", methods=['POST'])
+def bike_details_delete(bikeid):
+    bike = Bike_inventory.query.filter_by(id=bikeid).first()
+    db.session.delete(bike)
+    db.session.commit()
+
+    return redirect(url_for('bike_details_display'))
 
 
-# 4. Pass selected value to update page
-@app.route("/details/update/getvalue", methods=['PUT', 'POST'])
-def update_bike_values():
-    bike = Bike_inventory.query.filter_by(id=request.form['bikevalue']).first()
+# 1. Create order with customer name and phone number
+@app.route("/order/create", methods=['GET','POST'])
+def order_create():
+    if request.method == 'POST':
+        order_bike_name = request.form['bikename']
+        order_downpayment = request.form['downpayment']
+        order_count = request.form['ordercount']
 
-    return render_template('bike_details_update.html',bikedata=bike)
+        order = Bike_order(order_bike_name=order_bike_name,order_downpayment=order_downpayment,order_count=order_count)
+
+        db.session.add(order)
+        db.session.commit()
+        flash('order created successfully')
+        return redirect(url_for('order_display'))
+
+    return render_template('order_create.html')
+
+
+# 2. Display order details
+@app.route("/order/display", methods=['GET','POST'])
+def order_display():
+    order = Bike_order.query.all()
+
+    return render_template('order_display.html', orders=order)
+
+
+
+
+# 3. Update order , cancel, return
+@app.route("/order/delete/<id>", methods=['GET','POST'])
+def order_delete(id):
+    order = Bike_order.query.filter_by(id=id).first()
+    db.session.delete(order)
+    db.session.commit()
+
+    return redirect(url_for('order_display'))
+
+
+
+
 
 
 '''

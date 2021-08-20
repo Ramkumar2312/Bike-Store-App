@@ -13,7 +13,7 @@ class Bike_inventory(db.Model):
 
 class Bike_order(db.Model):
     id = db.Column(db.Integer,primary_key=True)
-    order_bike_name = db.Column(db.String(80),unique=True,nullable=False)
+    order_bike_name = db.Column(db.String(80),nullable=False)
     order_downpayment = db.Column(db.Integer,nullable=False)
     order_count = db.Column(db.Integer,nullable=False)
 
